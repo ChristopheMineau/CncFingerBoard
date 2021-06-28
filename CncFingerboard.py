@@ -21,8 +21,10 @@ Params1 = {
     "nutHeight" : 5,
     "12thFretWidth" : 53,
     "numberOfFrets" : 20,
+    "passDepth" : 0.3,
     "slotDepth" : 2,
     "bindingWidth" : 2,
+    "numberOfGcodeJobs" : 3,
     }
 
 
@@ -43,16 +45,19 @@ G00 Z12
 '''
 
 FRET = '''
+
 X$x0 Y$y
 G01 Z0.5  F300.0
-X$x1 Z$z1  F200.0
-X$x2  F400.0
-Z$z2  F200.0
-X$x1 F400.0
-G00 Z12
+$passes
+G00 Z12'''
+
+FRET_PASS = '''Z$z  F200.0
+X$x  F400.0
 '''
 
 FOOTER = '''
+
+G00 X0 Y0
 M5 M9
 M30
 '''
@@ -68,19 +73,23 @@ class Fret:
         self.width = self.calcFretWidth()
         self.x1 = (-self.width / 2) + self.parentFB.bindingWidth
         self.x2 = +self.width / 2  - self.parentFB.bindingWidth
-        self.z = -self.parentFB.slotDepth
-        
+                
     def calcFretWidth(self):
         ratio =  (self.parentFB.fret12Width - self.parentFB.nutWidth) / (self.parentFB.scale / 2)
         return (- self.y * ratio) + self.parentFB.nutWidth
     
     def getGcode(self, yShift=0):
-        return Template(FRET).safe_substitute(x0 = round(self.x1+5, 2),
-                                              x1 = round(self.x1, 2),
-                                              x2 = round(self.x2, 2),
-                                              y = round(self.y + yShift, 2),
-                                              z1 = round(self.z/2, 2),
-                                              z2 = round(self.z, 2), )
+        passes = ""
+        even = True
+        for z in self.parentFB.zs:
+            if even:
+                x = round(self.x2, 2)
+                even = False
+            else:
+                x = round(self.x1, 2)
+                even = True
+            passes += Template(FRET_PASS).safe_substitute(x = x, z = z)
+        return Template(FRET).safe_substitute(x0 = round(self.x1, 2), y= round(self.y, 2), passes = passes[:-1])
         
     def __str__(self):
         return f"Fret number {self.id} y={self.y} width= {self.width} x1={self.x1} x2={self.x2}" # + "\n" + self.getGcode()
@@ -93,8 +102,13 @@ class Fingerboard:
         self.nFrets = params["numberOfFrets"]
         self.nutWidth = params["nutWidth"]
         self.fret12Width  = params["12thFretWidth"]
+        self.passDepth = params["passDepth"]
         self.slotDepth = params["slotDepth"]
         self.bindingWidth = params["bindingWidth"]
+        self.numberOfGcodeJobs = params["numberOfGcodeJobs"]
+        self.zs = [-round(self.passDepth*i, 1) for i in range(int(self.slotDepth/self.passDepth)+1) ]
+        if self.zs[-1]<self.slotDepth:
+            self.zs.append(-self.slotDepth)
         self.frets = [Fret(i, self) for i in range(self.nFrets + 1)]
         
     def __str__(self):
