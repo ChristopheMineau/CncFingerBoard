@@ -1,8 +1,9 @@
 # For the luthier shop with CNC : CncFingerBoard
 This project is designed to provide a CNC program in order to mill the fret slots of a fretboard.
 For this, you will need first a CNC machine and a suitable endmill (0.6mm diameter typically).
-Depending on the size of scale of the instrument, nd the size of the bed of your fretboard, you may need to divide the work in different jobs,
-repositionning your fretboard blank between each job, in arder to mill a full length fretboard even on a small bed CNC.
+Depending on the scale of the instrument, and the size of the bed of your machine, you may need to divide the work in different jobs,
+repositionning your fretboard blank between each job.
+Doing so, you will be able to mill a full length fretboard even on a small bed CNC.
 
 This project is a python3 project. You can run the program CncFingerboard.py either on a local python installation, or if you don't have one,
 on a remote Web base environment like : https://www.online-python.com/
