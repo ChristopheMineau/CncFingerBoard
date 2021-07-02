@@ -34,6 +34,9 @@ Params1 = {
     "slotDepth" : 2,
     "bindingWidth" : 2,
     "numberOfGcodeJobs" :3,
+    "approachSpeed" : 300;
+    "plungeSpeed" : 200,
+    "cutSpeed" : 400,
     }
 ```
 * Name : string giving the name of the instrument, will be provided as a comment in the generated Gcode
@@ -49,6 +52,9 @@ Params1 = {
 If you have a big enough CNC, you can do the work in one single job, otherwise use values 2, 3 or 4.
 It will then create 1, 2 3 or 4 files you will have to save as separate gcode files and run separately.
 Read carefully the instructions provided by the program.
+* approachSpeed : Speed when approching the surface vertically.
+* plungeSpeed : Speed when plunging into the material.
+* cutSpeed : Transversal speed when cutting.
 
 # Example
 
@@ -65,6 +71,9 @@ Params1 = {
     "slotDepth" : 2,
     "bindingWidth" : 2,
     "numberOfGcodeJobs" :3,
+    "approachSpeed" : 300;
+    "plungeSpeed" : 200,
+    "cutSpeed" : 400,
     }
 ```
 

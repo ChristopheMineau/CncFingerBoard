@@ -25,6 +25,9 @@ Params1 = {
     "slotDepth" : 2,
     "bindingWidth" : 2,
     "numberOfGcodeJobs" :3,
+    "approachSpeed" : 300,
+    "plungeSpeed" : 200,
+    "cutSpeed" : 400,
     }
 
 
@@ -47,12 +50,12 @@ G00 Z12
 FRET = '''
 
 X$x0 Y$y
-G01 Z0.5  F300.0
+G01 Z0.5  F$approach
 $passes
 G00 Z12'''
 
-FRET_PASS = '''Z$z  F200.0
-X$x  F400.0
+FRET_PASS = '''Z$z  F$plunge
+X$x  F$cut
 '''
 
 FOOTER = '''
@@ -88,8 +91,14 @@ class Fret:
             else:
                 x = round(self.x1, 2)
                 even = True
-            passes += Template(FRET_PASS).safe_substitute(x = x, z = z)
-        return Template(FRET).safe_substitute(x0 = round(self.x1, 2), y= round(self.y - yShift, 2), passes = passes[:-1])
+            passes += Template(FRET_PASS).safe_substitute(x = x, 
+                                                          z = z,
+                                                          plunge = self.parentFB.plungeSpeed,
+                                                          cut = self.parentFB.cutSpeed,)
+        return Template(FRET).safe_substitute(x0 = round(self.x1, 2), 
+                                              y= round(self.y - yShift, 2), 
+                                              passes = passes[:-1],
+                                              approach = self.parentFB.approachSpeed,)
         
     def __str__(self):
         return f"Fret number {self.id} y={self.y} width= {self.width} x1={self.x1} x2={self.x2}" # + "\n" + self.getGcode()
@@ -140,6 +149,9 @@ class Fingerboard:
         self.slotDepth = params["slotDepth"]
         self.bindingWidth = params["bindingWidth"]
         self.numberOfGcodeJobs = params["numberOfGcodeJobs"]
+        self.approachSpeed = params["approachSpeed"]
+        self.plungeSpeed = params["plungeSpeed"]
+        self.cutSpeed = params["cutSpeed"]
         assert (self.numberOfGcodeJobs >= 1 and self.numberOfGcodeJobs <= 4) , "### ERROR : Number of operations must be between 1 and 4."
         self.zs = [-round(self.passDepth*i, 1) for i in range(int(self.slotDepth/self.passDepth)+1) ]
         if self.zs[-1]<self.slotDepth:
