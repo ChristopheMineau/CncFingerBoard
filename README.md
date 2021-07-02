@@ -16,6 +16,10 @@ If you intend to mill the fingerboard in more than one job, it is wise to fix on
 When milling the additional jobs, you will have to relocate the blank in the upward direction along the straightedge, so that the last milled fret in the previous job comes in zero position.
 This allows to mill a large fingerboard on a smaller CNC bed, splitting the work in 2, 3 or even 4 tasks, following the parameter  numberOfGcodeJobs (see below).
 
+The Zero position on your CNC must be tuned at the top of the fingerboard, in the middle of the nut or fret 0 line.
+
+In any case, read carefully the instructions from the printouts of the program !
+
 # Parameters
 In the CncFingerboard.py program, from line 17 you will find :
 ```
@@ -35,7 +39,7 @@ Params1 = {
 * Name : string giving the name of the instrument, will be provided as a comment in the generated Gcode
 * Scale : scale in mm of the instrument
 * Nut width : nut width in mm, from side to side.
-* nutHeight : no used so far
+* nutHeight : not used so far
 * 12thFretWidth : width of the fingerboard (binding included if any) at the 12th fret
 * numberOfFrets : number of frets (not taking into account a possible fret 0)
 * passDepth : in mm, depth of cut for each pass
