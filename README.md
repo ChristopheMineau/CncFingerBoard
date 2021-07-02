@@ -1,7 +1,7 @@
 # For the luthier shop with CNC : CncFingerBoard
 This project is designed to provide a CNC program in order to mill the fret slots of a fretboard.
 For this, you will need first a CNC machine and a suitable endmill (0.6mm diameter typically).
-Depending on the scale of the instrument, and the size of the bed of your machine, you may need to divide the work in different jobs,
+Depending on the scale of the instrument, and the size of the bed of your machine, you may need to divide the work into different jobs,
 repositionning your fretboard blank between each job.
 Doing so, you will be able to mill a full length fretboard even on a small bed CNC.
 
@@ -13,11 +13,12 @@ Different parameters are available, and must be changed in the program itself (w
 # Setup
 You need a blank for your fingerboard, it must be parallel, and its central axis must be set parallel to the Y axis.
 If you intend to mill the fingerboard in more than one job, it is wise to fix on the bed, left or right to the blank, a straightedge.
-When milling the additional jobs, you will have to relocate the blank in the upward direction along the straightedge, so that the last illed fret in the previous job comes in zero position.
+When milling the additional jobs, you will have to relocate the blank in the upward direction along the straightedge, so that the last milled fret in the previous job comes in zero position.
 This allows to mill a large fingerboard on a smaller CNC bed, splitting the work in 2, 3 or even 4 tasks, following the parameter  numberOfGcodeJobs (see below).
 
 # Parameters
 In the CncFingerboard.py program, from line 17 you will find :
+'''
 Params1 = {
     "name" : "guitare folk",
     "scale" : 633,
@@ -30,7 +31,7 @@ Params1 = {
     "bindingWidth" : 2,
     "numberOfGcodeJobs" :3,
     }
-
+'''
 * Name : string giving the name of the instrument, will be provided as a comment in the generated Gcode
 * Scale : scale in mm of the instrument
 * Nut width : nut width in mm, from side to side.
