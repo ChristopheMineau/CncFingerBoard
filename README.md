@@ -18,7 +18,7 @@ This allows to mill a large fingerboard on a smaller CNC bed, splitting the work
 
 # Parameters
 In the CncFingerboard.py program, from line 17 you will find :
-'''
+```
 Params1 = {
     "name" : "guitare folk",
     "scale" : 633,
@@ -31,7 +31,7 @@ Params1 = {
     "bindingWidth" : 2,
     "numberOfGcodeJobs" :3,
     }
-'''
+```
 * Name : string giving the name of the instrument, will be provided as a comment in the generated Gcode
 * Scale : scale in mm of the instrument
 * Nut width : nut width in mm, from side to side.
@@ -49,7 +49,7 @@ Read carefully the instructions provided by the program.
 # Example
 
 Parameters :
-'''
+```
 Params1 = {
     "name" : "guitare folk",
     "scale" : 633,
@@ -62,11 +62,11 @@ Params1 = {
     "bindingWidth" : 2,
     "numberOfGcodeJobs" :3,
     }
-'''
+```
 
-Give the following results :
+Gives the following results :
 
-'''
+```
 Fretboard for instrument : guitare folk
 Scale=633 Number of frets=20
 Nut width=43 12th fret width=53 Binding width=2
@@ -645,4 +645,4 @@ M30
 (FILE 3 ENDS HERE)
 
 
-'''gcode
+```gcode
